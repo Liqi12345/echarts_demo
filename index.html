@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="echarts.min.js"></script>
+</head>
+<style>
+	body{
+		width: 100%;
+		height: 100%;
+		background: #101638;
+		box-sizing: border-box;
+	}
+	div > div{
+		height: 100%;
+	}
+	.a,.b,.c{
+		display: flex;
+		justify-content: space-around;
+		align-items:center;
+	}
+	.c>div,.a >div{
+		border:4px solid #0C112F;
+	}
+</style>
+<body>
+	<div  class="a" style="height: 220px;">
+		<div id="Multiple" style="width: 50%; "></div>
+		<div id="gauge_left" style="width: 25%;"></div>
+		<div id="gauge_right" style="width: 25%;"></div>
+	</div>
+	<div id="Bar" class="b" style="height: 260px;">
+		
+	</div>
+	<div class="c" style="height: 220px;">
+		<div id="Doughnut1" style="width: 33.33%"></div>
+		<div id="Doughnut2" style="width: 33.33%"></div>
+		<div id="Doughnut3" style="width: 33.33%"></div>
+	</div>
+</body>
+</html>
+<script>
+option = {
+    
+    toolbox: {
+        feature: {
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    grid:{
+    	left: '0',
+            right: '0',
+            bottom: '0',
+    },
+
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            detail: {formatter:'{value}%',offsetCenter:['0','80%'],color:'#FC7CAB'},
+            data: [{value:30}],
+            
+           
+            splitLine:{
+            	show:false
+            },
+            splitNumber:{
+            	show:false
+            },
+            pointer:{
+            	length:'50%',
+            	offsetCenter:['40%','80%']
+            },
+            radius: '80%',
+        
+        title:{
+                offsetCenter:['80%','-40%'],
+                fontSize:20
+            },
+            axisTick:{
+            	length:0
+            },
+            axisLine:{
+               lineStyle:{
+                   color:[[0.35, '#951247'], [0.65, '#D22A65'], [1, '#FC7CAB']],
+                   width:20,
+               }
+           },
+
+       }
+    ]
+};
+
+
+
+	let gauge_left = echarts.init(document.getElementById('gauge_left'));
+	gauge_left.setOption(option);
+/////////////////////////////
+option1 = {
+    
+    toolbox: {
+        feature: {
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    grid:{
+    	left: '0',
+            right: '0',
+            bottom: '0',
+            top:'20%'
+    },
+
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            detail: {formatter:'{value}%',offsetCenter:['0','80%'],color:'#6EFEEC'},
+            data: [{value:75}],
+            
+           
+            splitLine:{
+            	show:false
+            },
+            splitNumber:{
+            	show:false
+            },
+            pointer:{
+            	length:'50%',
+            	offsetCenter:['40%','80%']
+            },
+            radius: '80%',
+        
+        title:{
+                offsetCenter:['-120%','-100%'],
+                fontSize:18,
+                color:'#5BB7B7'
+            },
+            axisTick:{
+            	length:0
+            },
+            axisLine:{
+               lineStyle:{
+                   color:[[0.35, '#098894'], [0.65, '#1BC7B9'], [1, '#6EFEEC']],
+                   width:20,
+
+               }
+           },
+
+       }
+    ]
+};
+
+	let gauge_right = echarts.init(document.getElementById('gauge_right'));
+    gauge_right.setOption(option1);
+    ///////////////////////////
+    var obj= [
+    	[320, 332, 301, 334, 390],
+    	[220, 182, 191, 234, 290],
+    	[150, 232, 201, 154, 190],
+    	[98, 77, 101, 99, 40]
+    ]
+option2 = {
+ 
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['空闲', '保养', '娱乐', '排行']
+    },
+   
+
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['2012', '2013', '2014', '2015', '2016']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            axisLine:{
+            	color:'#000'
+            },
+            axisLabel:{
+            	color:'#000'
+            },
+            splitLine:{
+            	lineStyle:{
+            		color:'#1A1F67'
+            	}
+            }
+        }
+    ],
+    series: [
+        {
+            name: '空闲',
+            type: 'bar',
+            barGap: 0,
+            barWidth:20,
+          
+            data: obj[0],
+            color:'#FDC10A'},
+        {
+            name: '保养',
+            type: 'bar',
+            barWidth:20,
+            data: obj[1],
+            color:'#1DD866'
+        },
+        {
+            name: '娱乐',
+            type: 'bar',
+            barWidth:20,
+            data: obj[2],
+            color:'#0F8ECA'
+
+        },
+        {
+            name: '排行',
+            type: 'bar',
+            barWidth:20,
+            data: obj[3],
+            color:'#BD0F4D'
+        }
+    ]
+};
+
+    
+
+ setInterval(function(obj){
+    	for(let [i,e] of obj.entries()){
+    		console.log(e,i)
+    		for(let [j,v] of e.entries()){
+    			obj[i][j] = parseInt(Math.random()*v + 200)
+    			console.log(Math.random()*v)
+    		}
+    	}
+    	console.log(obj)
+    	let bar = echarts.init(document.getElementById('Bar'));
+    	bar.setOption(option2);
+    }, 2000,obj)
+
+//////////////////////////////
+option3 = {
+	title:{
+		text:'实验室1',
+		textStyle:{
+			color:'yellow',
+			fontSize:'15',
+			fontWeight:400,
+			align:'center'
+		},
+		
+	},
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'right',
+        data:['未完成','50%'],
+    },
+    series: [
+        {
+        	color:['#FFC513','rgba(255,255,255,0.5)'],
+            name:'访问来源',
+            type:'pie',
+            clockwise:false,
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: true,
+            label: {
+               position: 'center',
+                    show: false,
+                     textStyle: {
+                        fontSize: '26',
+                        fontWeight: 'bold',
+                        lineHeight:'20'
+                    }
+                
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+               
+                {value:50, name:'50%',label:{show:true,name:'50',borderRadius:'40%',}},
+                {value:50,name:'未完成'},
+      
+            ]
+        }
+    ]
+};
+let doughnut = echarts.init(document.getElementById('Doughnut1'));
+    doughnut.setOption(option3);
+    //////////////////////// 
+option4 = {
+	title:{
+		text:'实验室2',
+		textStyle:{
+			color:'yellow',
+			fontSize:'15',
+			fontWeight:400,
+			align:'center'
+		},
+		
+	},
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'right',
+        data:['未完成','76%'],
+    },
+    series: [
+        {
+        	color:['#0ED75B','rgba(255,255,255,0.5)'],
+            name:'访问来源',
+            type:'pie',
+            clockwise:false,
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: true,
+            label: {
+               position: 'center',
+                    show: false,
+                     textStyle: {
+                        fontSize: '26',
+                        fontWeight: 'bold',
+                        lineHeight:'20'
+                    }
+                
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+               
+                {value:76, name:'76%',label:{show:true,name:'50',borderRadius:'40%',}},
+                {value:24,name:'未完成'},
+      
+            ]
+        }
+    ]
+};
+let doughnut2 = echarts.init(document.getElementById('Doughnut2'));
+    doughnut2.setOption(option4);
+    ///////////////////////////
+option5 = {
+	title:{
+		text:'实验室3',
+		textStyle:{
+			color:'yellow',
+			fontSize:'15',
+			fontWeight:400,
+			align:'center'
+		},
+		
+	},
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'right',
+        data:['未完成','28%'],
+    },
+    series: [
+        {
+        	color:['#B4134E','rgba(255,255,255,0.5)'],
+            name:'访问来源',
+            type:'pie',
+            clockwise:false,
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: true,
+            label: {
+               position: 'center',
+                    show: false,
+                     textStyle: {
+                        fontSize: '26',
+                        fontWeight: 'bold',
+                        lineHeight:'20'
+                    }
+                
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+               
+                {value:28, name:'28%',label:{show:true,name:'50',borderRadius:'40%',}},
+                {value:72,name:'未完成'},
+      
+            ]
+        }
+    ]
+};
+let doughnut3 = echarts.init(document.getElementById('Doughnut3'));
+    doughnut3.setOption(option5);
+    ///////////////////////////
+var colors = ['#16C2B6', '#118594', '#675bba'];
+
+
+option6 = {
+    color: colors,
+
+    tooltip: {
+        trigger: 'none',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    legend: {
+        data:['2015 降水量', '2016 降水量']
+    },
+    grid: {
+        top: 70,
+        bottom: 50
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: colors[1]
+                }
+            },
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        return '降水量  ' + params.value
+                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                    }
+                }
+            },
+            data: ["5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月", "4月"]
+        },
+        {
+            type: 'category',
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: colors[0]
+                }
+            },
+            axisPointer: {
+                label: {
+                    formatter: function (params) {
+                        return '降水量  ' + params.value
+                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                    }
+                }
+            },
+             data: ["5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月", "4月"]
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            splitLine:{
+            	lineStyle:{
+            		color:'#1A1F67'
+            	}
+            }
+        }
+    ],
+    series: [
+        {
+            name:'2015 降水量',
+            type:'line',
+            xAxisIndex: 1,
+            smooth: true,
+             areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(23,221,98,0.5)'
+                    }, {
+                        offset: 1,
+                        color: 'rgba(23,221,98,0.1)'
+                    }])
+                }
+            },
+             data: [7.9, 3.9, 18.1, 11.1, 23.2, 8.2, 26.6, 10.6, 28.4, 15.4, 18.3, 28.7]
+        },
+        {
+            name:'2016 降水量',
+            type:'line',
+            smooth: true,
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(32,195,184,0.5)'
+                    }, {
+                        offset: 1,
+                        color: 'rgba(32,195,184,0.1)'
+                    }])
+                }
+            },
+             data: [3.9, 18.9, 11.1, 18.7, 8.3, 23.2, 10.6, 26.6, 15.4, 28.4, 18.3, 0.7]
+        }
+    ]
+};
+let multiple = echarts.init(document.getElementById('Multiple'));
+    multiple.setOption(option6);
+</script>
